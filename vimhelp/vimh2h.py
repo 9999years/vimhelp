@@ -16,7 +16,7 @@ HEAD = """\
 <title>Vim: {filename}</title>
 <link rel="shortcut icon" href="favicon.ico">
 <!-- favicon is based on http://amnoid.de/tmp/vim_solidbright_512.png and is used with permission by its author -->
-<link rel="stylesheet" href="vimhelp.css" type="text/css">
+<link rel="stylesheet" href="https://vimhelp.org/vimhelp.css" type="text/css">
 """
 
 SEARCH_HEADERS = """
@@ -41,11 +41,11 @@ VERSION_NOTE = ", current as of Vim {version}"
 
 SITENAVI_LINKS = """
 Quick links:
-<a href="/">help overview</a> &middot;
-<a href="quickref.txt.html">quick reference</a> &middot;
-<a href="usr_toc.txt.html">user manual toc</a> &middot;
-<a href="{helptxt}#reference_toc">reference manual toc</a> &middot;
-<a href="vim_faq.txt.html">faq</a>
+<a href="https://vimhelp.org/">help overview</a> &middot;
+<a href="https://vimhelp.org/quickref.txt.html">quick reference</a> &middot;
+<a href="https://vimhelp.org/usr_toc.txt.html">user manual toc</a> &middot;
+<a href="https://vimhelp.org/#reference_toc#reference_toc">reference manual toc</a> &middot;
+<a href="https://vimhelp.org/vim_faq.txt.html">faq</a>
 """
 
 SITENAVI_LINKS_PLAIN = SITENAVI_LINKS.format(helptxt='help.txt.html')
@@ -72,7 +72,7 @@ TEXTSTART = '<pre>'
 FOOTER = '</pre>'
 
 FOOTER2 = """
-<footer>This site is maintained by Carlo Teubner (<i>(my first name) at cteubner dot net</i>).</footer>
+<footer>This rendered HTML documentation is generated using Carlo Teubner’s <a href="https://github.com/c4rlo/vimhelp">vimhelp</a> tool.</footer>
 </body>
 </html>
 """
