@@ -3,7 +3,7 @@
 import sys
 import os
 import os.path
-# import cProfile
+import argparse
 
 sys.path.append('.')
 
@@ -22,19 +22,21 @@ def usage():
 
 
 def main():
-    if len(sys.argv) < 3:
-        sys.exit(usage())
+    parser = argparse.ArgumentParser()
+    parser.add_argument('IN_DIR', help="Input directory containing .txt files to render as Vim documentation")
+    parser.add_argument('VIM_DIR', help="Input directory containing .txt files from the Vim source tree, to be used for additional tags when rendering files from IN_DIR")
+    parser.add_argument('OUT_DIR', help="Directory to render .html documentation into")
+    args = parser.parse_args()
 
-    in_dir = sys.argv[1]
-    out_dir = sys.argv[2]
-    basenames = sys.argv[3:]
+    in_dir: str = args.IN_DIR
+    out_dir: str = args.OUT_DIR
+    vim_dir: str = args.VIM_DIR
 
-    if len(basenames) == 0:
-        basenames = os.listdir(in_dir)
+    basenames = os.listdir(in_dir)
 
     print("Processing tags...")
     h2h = VimH2H(slurp(os.path.join(in_dir, 'tags')).decode(),
-                 local_basenames=basenames,
+                 slurp(os.path.join(vim_dir, 'tags')).decode(),
                  is_web_version=False)
 
     for basename in basenames:
@@ -57,4 +59,3 @@ def main():
 
 
 main()
-# cProfile.run('main()')

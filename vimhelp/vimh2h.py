@@ -161,12 +161,18 @@ class Link:
 
 
 class VimH2H:
-    def __init__(self, tags, version=None, is_web_version=True, local_basenames=None):
+    def __init__(self, tags, vim_tags, version=None, is_web_version=True):
         self._urls = {}
         self._version = version
         self._is_web_version = is_web_version
-        self._local_basenames = local_basenames or []
+        self._local_basenames = set()
         for line in RE_NEWLINE.split(tags):
+            if m := RE_TAGLINE.match(line):
+                tag, filename = m.group(1, 2)
+                self._local_basenames.add(filename)
+                self.do_add_tag(filename, tag)
+
+        for line in RE_NEWLINE.split(vim_tags):
             if m := RE_TAGLINE.match(line):
                 tag, filename = m.group(1, 2)
                 self.do_add_tag(filename, tag)
