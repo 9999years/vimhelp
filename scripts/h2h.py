@@ -6,7 +6,7 @@ import os.path
 import argparse
 
 # This adds ../ to the path.
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from vimhelp.vimh2h import VimH2H  # noqa: E402
 

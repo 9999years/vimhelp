@@ -11,4 +11,4 @@ vim_dir="$tmp/vim/runtime/doc"
 
 vim "+helptags $vim_dir" "+helptags $INPUT_DOC_DIRECTORY" +q
 
-python3 ./scripts/h2h.py "$INPUT_DOC_DIRECTORY" "$vim_dir" "$INPUT_OUTPUT_DIRECTORY"
+python3 "$(dirname "$0")/scripts/h2h.py" "$INPUT_DOC_DIRECTORY" "$vim_dir" "$INPUT_OUTPUT_DIRECTORY"
