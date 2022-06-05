@@ -129,8 +129,9 @@ RE_LOCAL_ADD = re.compile(r'LOCAL ADDITIONS:\s+\*local-additions\*$')
 
 
 class Link:
-    def __init__(self, filename, htmlfilename, tag):
+    def __init__(self, filename, htmlfilename, tag, local_basenames):
         self.filename = filename
+        self._local_basenames = local_basenames
         self._htmlfilename = htmlfilename
         self._tag_quoted = urllib.parse.quote_plus(tag)
         self._tag_escaped = html_escape(tag)
@@ -143,7 +144,13 @@ class Link:
 
     @functools.cache
     def href(self, is_same_doc):
-        doc = '' if is_same_doc else self._htmlfilename
+        if is_same_doc:
+            doc = ''
+        else:
+            doc = f'https://vimhelp.org/{self._htmlfilename}'
+            for basename in self._local_basenames:
+                if self._htmlfilename == basename + ".html":
+                    doc = self._htmlfilename
         return f"{doc}#{self._tag_quoted}"
 
     @functools.cache
@@ -154,10 +161,11 @@ class Link:
 
 
 class VimH2H:
-    def __init__(self, tags, version=None, is_web_version=True):
+    def __init__(self, tags, version=None, is_web_version=True, local_basenames=None):
         self._urls = {}
         self._version = version
         self._is_web_version = is_web_version
+        self._local_basenames = local_basenames or []
         for line in RE_NEWLINE.split(tags):
             if m := RE_TAGLINE.match(line):
                 tag, filename = m.group(1, 2)
@@ -173,7 +181,7 @@ class VimH2H:
             htmlfilename = '/'
         else:
             htmlfilename = filename + '.html'
-        self._urls[tag] = Link(filename, htmlfilename, tag)
+        self._urls[tag] = Link(filename, htmlfilename, tag, self._local_basenames)
 
     def sorted_tag_href_pairs(self):
         result = [ (tag, link.href(is_same_doc=False))

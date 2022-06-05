@@ -29,12 +29,13 @@ def main():
     out_dir = sys.argv[2]
     basenames = sys.argv[3:]
 
-    print("Processing tags...")
-    h2h = VimH2H(slurp(os.path.join(in_dir, 'tags')).decode(),
-                 is_web_version=False)
-
     if len(basenames) == 0:
         basenames = os.listdir(in_dir)
+
+    print("Processing tags...")
+    h2h = VimH2H(slurp(os.path.join(in_dir, 'tags')).decode(),
+                 local_basenames=basenames,
+                 is_web_version=False)
 
     for basename in basenames:
         if os.path.splitext(basename)[1] != '.txt' and basename != 'tags':
