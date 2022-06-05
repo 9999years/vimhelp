@@ -1,0 +1,18 @@
+---
+name: Generate Vim HTML documentation
+author: Rebecca Turner and Carlo Teubner
+description: >-
+  Generate HTML documentation for Vim help files.
+inputs:
+  doc_directory:
+    description: Directory containing documentation .txt files.
+    required: true
+  output_directory:
+    description: Directory to write output files to.
+    required: true
+runs:
+  using: docker
+  image: Dockerfile
+branding:
+  icon: book
+  color: green
