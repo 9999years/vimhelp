@@ -34,6 +34,7 @@ def main():
     vim_dir: str = args.VIM_DIR
 
     basenames = os.listdir(in_dir)
+    os.makedirs(out_dir, exist_ok=True)
 
     print("Processing tags...")
     h2h = VimH2H(slurp(os.path.join(in_dir, 'tags')).decode(),
